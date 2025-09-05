@@ -1,0 +1,13 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# Uploaded images (even though we auto-delete them)
+uploads/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

@@ -1,0 +1,21 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <div class="result-box text-center">
+    <h3 class="mb-3">Breed Recognition Result</h3>
+
+    <img src="/../uploads/<%= image %>" class="img-fluid mb-3" style="max-width:400px; border-radius:10px;">
+
+    <h4><%= breed.name %> (Confidence: <%= breed.confidence %>%)</h4>
+    <p class="mt-2"><%= breed.description %></p>
+
+    <h5 class="mt-4">Key Characteristics:</h5>
+    <ul class="list-group">
+      <% breed.characteristics.forEach(c => { %>
+        <li class="list-group-item"><%= c %></li>
+      <% }) %>
+    </ul>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

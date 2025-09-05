@@ -1,0 +1,26 @@
+{
+  "name": "cattlebreed-ai",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "@huggingface/inference": "^2.6.4",
+    "dotenv": "^17.2.2",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "form-data": "^4.0.4",
+    "mongoose": "^8.18.0",
+    "multer": "^2.0.2",
+    "node-fetch": "^3.3.2",
+    "openai": "^5.19.1"
+  }
+}

@@ -1,0 +1,97 @@
+<%- include('partials/header') %>
+
+<div class="container mt-5">
+  <h2 class="text-success">Recognition History</h2>
+  <p class="mb-4">Previously analyzed breeds are stored here.</p>
+
+  <!-- Delete All History Button -->
+  <div class="mb-4 text-end">
+    <button id="deleteHistoryBtn" class="btn btn-danger btn-sm">Delete All History</button>
+  </div>
+
+  <div class="row">
+    <% if (results.length === 0) { %>
+      <p>No history found yet. Try uploading an image!</p>
+    <% } %>
+
+    <% results.forEach(r => { %>
+      <div class="col-md-4 mb-4" id="card-<%= r._id %>">
+        <div class="card shadow-sm">
+          <!-- Annotated Image -->
+          <img src="<%= r.annotatedImageUrl %>" class="card-img-top" alt="Breed Image" style="height:200px; object-fit:cover;">
+          
+          <div class="card-body text-center">
+            <!-- Breed and Confidence -->
+            <h5 class="card-title"><%= r.breedName %> (Confidence: <%= r.confidence %>%)</h5>
+
+            <!-- Description -->
+            <p><strong>Description:</strong> <%= r.description %></p>
+
+            <!-- Download Buttons -->
+            <div class="d-flex justify-content-center gap-2 my-2">
+              <% if (r.annotatedImageUrl) { %>
+                <a href="<%= r.annotatedImageUrl %>" target="_blank" download class="btn btn-outline-success btn-sm">Download Annotated Image</a>
+              <% } %>
+              <% if (r.csvFileUrl) { %>
+                <a href="<%= r.csvFileUrl %>" target="_blank" download class="btn btn-outline-success btn-sm">Download CSV</a>
+              <% } %>
+            </div>
+
+            <!-- Individual Delete Button -->
+            <button class="btn btn-outline-danger btn-sm delete-single-btn" data-id="<%= r._id %>">Delete</button>
+
+            <!-- Created Date -->
+            <small class="text-muted d-block mt-2">Analyzed on <%= r.createdAt.toDateString() %></small>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</div>
+
+<script>
+  // Delete All History
+  const deleteBtn = document.getElementById("deleteHistoryBtn");
+  deleteBtn.addEventListener("click", async () => {
+    if (!confirm("Are you sure you want to delete all history?")) return;
+    try {
+      const res = await fetch("/history/delete", { method: "DELETE" });
+      const data = await res.json();
+      if (res.ok) {
+        alert(data.message);
+        location.reload();
+      } else {
+        alert(data.error || "Failed to delete history");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error deleting history");
+    }
+  });
+
+  // Delete Single Entry
+  const deleteBtns = document.querySelectorAll(".delete-single-btn");
+  deleteBtns.forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const id = btn.dataset.id;
+      if (!confirm("Are you sure you want to delete this entry?")) return;
+
+      try {
+        const res = await fetch(`/history/delete/${id}`, { method: "DELETE" });
+        const data = await res.json();
+        if (res.ok) {
+          alert(data.message);
+          document.getElementById(`card-${id}`).remove();
+        } else {
+          alert(data.error || "Failed to delete entry");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Error deleting entry");
+      }
+    });
+  });
+</script>
+
+<%- include('partials/footer') %>
+
