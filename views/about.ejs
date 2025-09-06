@@ -4,8 +4,9 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10">
-        <div class="p-5 shadow-lg rounded-3 bg-light">
-          <h2 class="text-center mb-4 fw-bold">About GoVed AI</h2>
+        <div class="feature-card p-5 shadow-lg fade-in-up">
+          <h2 class="text-center mb-4 fw-bold text-success">About GoVed AI</h2>
+
           <p class="lead text-justify">
             GoVed AI is an intelligent web application designed to help farmers,
             veterinarians, and researchers identify different breeds of cattle and buffaloes 
@@ -23,7 +24,7 @@
             combines user-friendly design with powerful backend capabilities.
           </p>
 
-          <h4 class="mt-4">Key Features</h4>
+          <h4 class="mt-4 text-success">Key Features</h4>
           <ul class="fs-5">
             <li>📷 <strong>Image-based breed recognition</strong> for cattle and buffaloes.</li>
             <li>📊 <strong>Breed information database</strong> including origin, traits, and characteristics.</li>
@@ -40,7 +41,7 @@
             and contribute towards smarter, sustainable farming.
           </p>
 
-          <p class="text-center mt-5 fs-4 fw-semibold">
+          <p class="text-center mt-5 fs-4 fw-semibold text-success">
             <em>"Our vision is to make breed identification simple, accurate, and accessible for everyone."</em>
           </p>
         </div>
@@ -49,6 +50,21 @@
   </div>
 </section>
 
-</div>
+<script>
+  // Scroll fade-in
+  const fadeElems = document.querySelectorAll('.fade-in-up');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  fadeElems.forEach(el => observer.observe(el));
+</script>
 
 <%- include('partials/footer') %>
+
+

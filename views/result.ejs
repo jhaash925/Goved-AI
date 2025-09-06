@@ -1,21 +1,29 @@
 <%- include('partials/header') %>
 
-<div class="container">
-  <div class="result-box text-center">
-    <h3 class="mb-3">Breed Recognition Result</h3>
+<div class="container my-5">
+  <div class="result-box mx-auto shadow-lg p-4 text-center" style="max-width:500px; border-radius:12px; border:1px solid #198754; transition: transform 0.3s;">
+    <h3 class="mb-3 fw-bold">Breed Recognition Result</h3>
 
-    <img src="/../uploads/<%= image %>" class="img-fluid mb-3" style="max-width:400px; border-radius:10px;">
+    <img src="/../uploads/<%= image %>" class="img-fluid mb-3" style="max-width:400px; border-radius:12px;">
 
-    <h4><%= breed.name %> (Confidence: <%= breed.confidence %>%)</h4>
+    <h4 class="fw-semibold text-success"><%= breed.name %> (Confidence: <%= breed.confidence %>%)</h4>
     <p class="mt-2"><%= breed.description %></p>
 
-    <h5 class="mt-4">Key Characteristics:</h5>
-    <ul class="list-group">
+    <h5 class="mt-4 fw-bold">Key Characteristics:</h5>
+    <ul class="list-group list-group-flush text-start mt-2">
       <% breed.characteristics.forEach(c => { %>
-        <li class="list-group-item"><%= c %></li>
+        <li class="list-group-item border-0 bg-light mb-1 rounded px-3"><%= c %></li>
       <% }) %>
     </ul>
   </div>
 </div>
 
+<script>
+  // Add hover pop effect
+  const card = document.querySelector('.result-box');
+  card.addEventListener('mouseenter', () => card.style.transform = 'scale(1.05)');
+  card.addEventListener('mouseleave', () => card.style.transform = 'scale(1)');
+</script>
+
 <%- include('partials/footer') %>
+

@@ -2,7 +2,7 @@
 
 <div class="container my-5">
   <div class="upload-box text-center">
-    <h3>Upload Cattle/Buffalo Image</h3>
+    <h3 class="mb-4">Upload Cattle/Buffalo Image</h3>
     <input type="file" id="imageInput" name="file" class="form-control my-3" accept="image/*" required>
     <button id="analyzeBtn" class="btn btn-success">Analyze Breed</button>
 
@@ -19,8 +19,9 @@
     if (!input.files.length) return alert("Please select a file!");
 
     const formData = new FormData();
-    formData.append("file", input.files[0]); // key = 'file', matches backend
+    formData.append("file", input.files[0]);
 
+    // Loading spinner
     container.innerHTML = `
       <div class="d-flex justify-content-center align-items-center" style="height:150px;">
         <div class="spinner-border text-success" role="status" style="width: 3rem; height: 3rem;">
@@ -29,7 +30,6 @@
       </div>
       <p class="text-success mt-2">Analyzing your cattle breed...</p>
     `;
-
 
     try {
       const res = await fetch("/breed/analyze", { method: "POST", body: formData });
@@ -40,22 +40,17 @@
         return;
       }
 
-      // Result card with description & download buttons
+      // Result card with green gradient and shadow effect
       let html = `
-        <div class="card mx-auto" style="max-width:400px; padding:15px; text-align:center; border:1px solid #198754; border-radius:10px;">
-          <h4>Breed Detection Result</h4>
+        <div class="card mx-auto result-box shadow-lg p-3" style="max-width:400px; border-radius:12px; text-align:center; border:1px solid #198754; transition: transform 0.3s;">
+          <h4 class="mb-3">Breed Detection Result</h4>
 
-          <!-- Annotated Image -->
           <img src="${data.annotated_image_url}" alt="Annotated Image" style="width:100%; border-radius:10px; margin-bottom:10px;">
 
-          <!-- Top Prediction -->
           <p><strong>Breed:</strong> ${data.breed}</p>
           <p><strong>Confidence:</strong> ${data.confidence}%</p>
-
-          <!-- Description -->
           <p><strong>Description:</strong> ${data.description}</p>
 
-          <!-- Download Buttons -->
           <div class="d-flex justify-content-center gap-2 my-2">
             ${data.annotated_image_url ? `<a href="${data.annotated_image_url}" target="_blank" download class="btn btn-outline-success btn-sm">Download Annotated Image</a>` : ''}
             ${data.csv_file_url ? `<a href="${data.csv_file_url}" target="_blank" download class="btn btn-outline-success btn-sm">Download CSV</a>` : ''}
@@ -65,6 +60,11 @@
 
       container.innerHTML = html;
 
+      // Add hover pop effect
+      const card = container.querySelector('.result-box');
+      card.addEventListener('mouseenter', () => card.style.transform = 'scale(1.05)');
+      card.addEventListener('mouseleave', () => card.style.transform = 'scale(1)');
+
     } catch (err) {
       console.error(err);
       container.innerHTML = `<p style="color:red">Error analyzing image</p>`;
@@ -73,4 +73,5 @@
 </script>
 
 <%- include('partials/footer') %>
+
 

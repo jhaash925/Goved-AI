@@ -11,8 +11,12 @@ export async function generateBreedDescription(breedName) {
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    const prompt = `Write a short, clear description about the cattle breed "${breedName}". 
-    Include its origin, characteristics, and why it is unique. Keep it under 120 words.`;
+  const prompt =`Write a short and clear description about the cattle breed "${breedName}".
+                  Include:
+                  1. Description (including origin)
+                  2. Characteristics
+                  3. Physical traits like height, weight, and lifespan;
+                  Keep it concise, under 120 words, and easy to read. Do not use HTML or extra symbols.`;
 
     const result = await model.generateContent(prompt);
     return result.response.text();

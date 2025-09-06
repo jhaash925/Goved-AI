@@ -1,25 +1,25 @@
 <%- include('partials/header') %>
 
 <div class="container mt-5">
-  <h2 class="text-success">Breed Library</h2>
-  <p class="mb-4">Explore detailed information on popular cattle and buffalo breeds.</p>
+  <h2 class="text-success text-center mb-4 fw-bold">Breed Library</h2>
+  <p class="text-center mb-5">Explore detailed information on popular cattle and buffalo breeds.</p>
 
-  <div class="row">
-    <div class="col-md-4 mb-3">
-      <div class="card shadow-sm">
-        <img src="/images/sample-cow.jpg" class="card-img-top" alt="Cow">
-        <div class="card-body">
-          <h5 class="card-title">Gir</h5>
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card shadow-sm border-success rounded-3 hover-pop">
+        <img src="/images/sample-cow.jpg" class="card-img-top" alt="Cow" style="height:250px; object-fit:cover; border-top-left-radius:12px; border-top-right-radius:12px;">
+        <div class="card-body text-center">
+          <h5 class="card-title text-success fw-semibold">Gir</h5>
           <p class="card-text">Indian dairy breed known for high milk yield.</p>
         </div>
       </div>
     </div>
-    
-    <div class="col-md-4 mb-3">
-      <div class="card shadow-sm">
-        <img src="/images/sample-buffalo.jpg" class="card-img-top" alt="Buffalo">
-        <div class="card-body">
-          <h5 class="card-title">Murrah</h5>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm border-success rounded-3 hover-pop">
+        <img src="/images/sample-buffalo.jpg" class="card-img-top" alt="Buffalo" style="height:250px; object-fit:cover; border-top-left-radius:12px; border-top-right-radius:12px;">
+        <div class="card-body text-center">
+          <h5 class="card-title text-success fw-semibold">Murrah</h5>
           <p class="card-text">High-yield buffalo breed from Haryana, India.</p>
         </div>
       </div>
@@ -27,4 +27,17 @@
   </div>
 </div>
 
+<style>
+  .hover-pop {
+    border: 1px solid #198754;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .hover-pop:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
+</style>
+
 <%- include('partials/footer') %>
+

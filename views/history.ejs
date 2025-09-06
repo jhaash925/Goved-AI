@@ -1,22 +1,26 @@
 <%- include('partials/header') %>
 
 <div class="container mt-5">
-  <h2 class="text-success">Recognition History</h2>
-  <p class="mb-4">Previously analyzed breeds are stored here.</p>
+  <h2 class="text-success text-center mb-4">Recognition History</h2>
+  <p class="text-center mb-4">Previously analyzed breeds are stored here.</p>
 
-  <!-- Delete All History Button -->
-  <div class="mb-4 text-end">
-    <button id="deleteHistoryBtn" class="btn btn-danger btn-sm">Delete All History</button>
-  </div>
+  <% if (results.length > 0) { %>
+    <!-- Centered and prominent Delete All History Button -->
+    <div class="mb-4 d-flex justify-content-center">
+      <button id="deleteHistoryBtn" class="btn btn-danger btn-sm px-4 py-2 fw-bold">
+        Delete All History
+      </button>
+    </div>
+  <% } %>
 
   <div class="row">
     <% if (results.length === 0) { %>
-      <p>No history found yet. Try uploading an image!</p>
+      <p class="text-center">No history found yet. Try uploading an image!</p>
     <% } %>
 
     <% results.forEach(r => { %>
       <div class="col-md-4 mb-4" id="card-<%= r._id %>">
-        <div class="card shadow-sm">
+        <div class="card history-card shadow-sm">
           <!-- Annotated Image -->
           <img src="<%= r.annotatedImageUrl %>" class="card-img-top" alt="Breed Image" style="height:200px; object-fit:cover;">
           
@@ -49,25 +53,53 @@
   </div>
 </div>
 
+<style>
+  /* ===== History Cards Hover Effect ===== */
+  .history-card {
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(25, 135, 84, 0.2);
+  }
+
+  .history-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    border-color: #198754;
+    background: linear-gradient(135deg, #f4fff7, #ffffff);
+  }
+
+  .history-card .card-title {
+    color: #198754;
+    font-weight: 600;
+  }
+
+  .history-card img {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
+</style>
+
 <script>
   // Delete All History
   const deleteBtn = document.getElementById("deleteHistoryBtn");
-  deleteBtn.addEventListener("click", async () => {
-    if (!confirm("Are you sure you want to delete all history?")) return;
-    try {
-      const res = await fetch("/history/delete", { method: "DELETE" });
-      const data = await res.json();
-      if (res.ok) {
-        alert(data.message);
-        location.reload();
-      } else {
-        alert(data.error || "Failed to delete history");
+  if (deleteBtn) {
+    deleteBtn.addEventListener("click", async () => {
+      if (!confirm("Are you sure you want to delete all history?")) return;
+      try {
+        const res = await fetch("/history/delete", { method: "DELETE" });
+        const data = await res.json();
+        if (res.ok) {
+          alert(data.message);
+          location.reload();
+        } else {
+          alert(data.error || "Failed to delete history");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Error deleting history");
       }
-    } catch (err) {
-      console.error(err);
-      alert("Error deleting history");
-    }
-  });
+    });
+  }
 
   // Delete Single Entry
   const deleteBtns = document.querySelectorAll(".delete-single-btn");
@@ -94,4 +126,3 @@
 </script>
 
 <%- include('partials/footer') %>
-

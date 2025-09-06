@@ -1,17 +1,15 @@
 <%- include("partials/header") %>
 
 <div class="container py-5">
-  <h2 class="text-center mb-5 fw-bold">Browse Cattle Breeds</h2>
-
-
+  <h2 class="text-center mb-5 fw-bold text-success">Browse Cattle Breeds</h2>
 
   <div class="row g-4">
     <% breeds.forEach(breed => { %>
       <div class="col-md-4">
-        <div class="card h-100 shadow-sm">
-          <img src="<%= breed.image %>" class="card-img-top" alt="<%= breed.name %>" style="object-fit: cover; height: 250px; width: 100%;">
-          <div class="card-body">
-          <h5 class="card-title"><%= breed.displayName %></h5>
+        <div class="card h-100 shadow-sm border-success rounded-3 hover-pop">
+          <img src="<%= breed.image %>" class="card-img-top" alt="<%= breed.name %>" style="height:250px; object-fit:cover; border-top-left-radius:12px; border-top-right-radius:12px;">
+          <div class="card-body text-center">
+            <h5 class="card-title text-success fw-semibold"><%= breed.displayName %></h5>
             <p class="card-text text-muted"><%= breed.description %></p>
             <p><strong>Origin:</strong> <%= breed.origin %></p>
           </div>
@@ -21,6 +19,17 @@
   </div>
 </div>
 
+<style>
+  .hover-pop {
+    border: 1px solid #198754;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
 
+  .hover-pop:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
+</style>
 
 <%- include("partials/footer") %>
+
